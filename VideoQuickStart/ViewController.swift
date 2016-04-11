@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITextFieldDelegate {
     
     // Twilio Access Token - Generate a demo Access Token at https://www.twilio.com/user/account/video/dev-tools/testing-tools
-    let twilioAccessToken = "eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCIsICJjdHkiOiAidHdpbGlvLWZwYTt2PTEifQ.eyJpc3MiOiAiU0s2NzRiMTg4NjlmMTFmYWNjNjY1YTY1ZmQ0ZGRmMmY0ZiIsICJncmFudHMiOiB7InJ0YyI6IHsiY29uZmlndXJhdGlvbl9wcm9maWxlX3NpZCI6ICJub25lIn0sICJpZGVudGl0eSI6ICJwdGFuayJ9LCAianRpIjogIlNLNjc0YjE4ODY5ZjExZmFjYzY2NWE2NWZkNGRkZjJmNGYtMTQ2MDM1MTc3MSIsICJzdWIiOiAiQUM5NmNjYzkwNDc1M2IzMzY0ZjI0MjExZThkOTc0NmE5MyIsICJleHAiOiAxNDYwMzUzNTcxfQ.OetPINbTmQbrU6R6D4iuDqZTN7_O5ay8ylr5h064yy0";
+    let twilioAccessToken = "TWILIO_ACCESS_TOKEN";
     
     // Storyboard's outlets
     @IBOutlet weak var statusMessage: UILabel!
