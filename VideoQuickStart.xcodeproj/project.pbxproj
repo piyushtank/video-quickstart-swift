@@ -15,6 +15,7 @@
 		304A80CB1C23351B00CB8C03 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 304A80CA1C23351B00CB8C03 /* GLKit.framework */; };
 		304A80CD1C23352100CB8C03 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 304A80CC1C23352100CB8C03 /* CoreMedia.framework */; };
 		304A80CF1C23352700CB8C03 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 304A80CE1C23352700CB8C03 /* SystemConfiguration.framework */; };
+		4BAA1ED71CB7356800B12E2A /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BAA1ED61CB7356800B12E2A /* Platform.swift */; };
 		8B79D46A1C2252A100489AA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B79D4691C2252A100489AA5 /* AppDelegate.swift */; };
 		8B79D46C1C2252A100489AA5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B79D46B1C2252A100489AA5 /* ViewController.swift */; };
 		8B79D46F1C2252A100489AA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B79D46D1C2252A100489AA5 /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 		304A80CA1C23351B00CB8C03 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		304A80CC1C23352100CB8C03 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		304A80CE1C23352700CB8C03 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4BAA1ED61CB7356800B12E2A /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		8B79D4661C2252A100489AA5 /* VideoQuickStart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoQuickStart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B79D4691C2252A100489AA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B79D46B1C2252A100489AA5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				8B79D4691C2252A100489AA5 /* AppDelegate.swift */,
 				8B9921761C225C1E00DC3BCA /* SwiftyJSON.swift */,
 				8B79D46B1C2252A100489AA5 /* ViewController.swift */,
+				4BAA1ED61CB7356800B12E2A /* Platform.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -206,6 +209,7 @@
 			files = (
 				8B9921771C225C1E00DC3BCA /* SwiftyJSON.swift in Sources */,
 				8B79D46C1C2252A100489AA5 /* ViewController.swift in Sources */,
+				4BAA1ED71CB7356800B12E2A /* Platform.swift in Sources */,
 				8B79D46A1C2252A100489AA5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
