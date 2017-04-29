@@ -169,8 +169,12 @@ class ViewController: UIViewController {
         }
 
         // Preview our local camera track in the local video preview view.
-        camera = TVICameraCapturer(source: .frontCamera, delegate: self)
-        localVideoTrack = TVILocalVideoTrack.init(capturer: camera!)
+        camera = TVICameraCapturer()
+        let constraints = TVIVideoConstraints(block: { (builder: TVIVideoConstraintsBuilder) in
+            builder.aspectRatio = TVIAspectRatio16x9
+        })
+        localVideoTrack = TVILocalVideoTrack(capturer: camera!, enabled: true, constraints: constraints)
+        
         if (localVideoTrack == nil) {
             logMessage(messageText: "Failed to create video track")
         } else {
