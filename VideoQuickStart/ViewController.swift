@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var roomTextField: UITextField!
     @IBOutlet weak var roomLine: UIView!
     @IBOutlet weak var roomLabel: UILabel!
-    @IBOutlet weak var micButton: UIButton!
+    @IBOutlet weak var videoButton: UIButton!
 
     // MARK: UIViewController
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ class ViewController: UIViewController {
         
         // Disconnect and mic button will be displayed when the Client is connected to a Room.
         self.disconnectButton.isHidden = true
-        self.micButton.isHidden = true
+        self.videoButton.isHidden = true
         
         self.roomTextField.delegate = self
         
@@ -149,16 +149,27 @@ class ViewController: UIViewController {
         logMessage(messageText: "Attempting to disconnect from room \(room!.name)")
     }
     
-    @IBAction func toggleMic(sender: AnyObject) {
-        if (self.localAudioTrack != nil) {
-            self.localAudioTrack?.isEnabled = !(self.localAudioTrack?.isEnabled)!
-            
-            // Update the button title
-            if (self.localAudioTrack?.isEnabled == true) {
-                self.micButton.setTitle("Mute", for: .normal)
-            } else {
-                self.micButton.setTitle("Unmute", for: .normal)
+    @IBAction func toggleVideo(sender: AnyObject) {
+        let localParticipator = room?.localParticipant;
+        if (localParticipator?.videoTracks.count == 0) {
+            self.camera = TVICameraCapturer()
+            let constraints = TVIVideoConstraints(block: { (builder: TVIVideoConstraintsBuilder) in
+                builder.aspectRatio = TVIAspectRatio16x9
+            })
+            localVideoTrack = TVILocalVideoTrack(capturer: camera!, enabled: true, constraints: constraints)
+            if let unwrVideo = localVideoTrack {
+                // localParticipator is obtained from room object
+                localParticipator?.addVideoTrack(unwrVideo)
+                unwrVideo.addRenderer(self.previewView)
+                self.previewView.isHidden = false
+                self.videoButton.titleLabel?.text = "Remove Video"
             }
+        } else {
+            localParticipator?.removeVideoTrack(localVideoTrack!)
+            localVideoTrack?.removeRenderer(self.previewView)
+            localVideoTrack = nil
+            self.previewView.isHidden = true
+            self.videoButton.titleLabel?.text = "Add Video"
         }
     }
 
@@ -222,7 +233,7 @@ class ViewController: UIViewController {
         self.roomTextField.isHidden = inRoom
         self.roomLine.isHidden = inRoom
         self.roomLabel.isHidden = inRoom
-        self.micButton.isHidden = !inRoom
+        self.videoButton.isHidden = !inRoom
         self.disconnectButton.isHidden = !inRoom
         UIApplication.shared.isIdleTimerDisabled = inRoom
     }
