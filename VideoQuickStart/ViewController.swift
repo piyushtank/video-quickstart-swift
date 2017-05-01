@@ -162,14 +162,14 @@ class ViewController: UIViewController {
                 localParticipator?.addVideoTrack(unwrVideo)
                 unwrVideo.addRenderer(self.previewView)
                 self.previewView.isHidden = false
-                self.videoButton.titleLabel?.text = "Remove Video"
+                self.videoButton.setTitle("Remove Video", for: .normal)
             }
         } else {
             localParticipator?.removeVideoTrack(localVideoTrack!)
             localVideoTrack?.removeRenderer(self.previewView)
             localVideoTrack = nil
             self.previewView.isHidden = true
-            self.videoButton.titleLabel?.text = "Add Video"
+            self.videoButton.setTitle("Add Video", for: .normal)
         }
     }
 
