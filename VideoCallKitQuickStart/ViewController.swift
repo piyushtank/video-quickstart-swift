@@ -300,6 +300,7 @@ extension ViewController : TVIRoomDelegate {
         self.callKitCompletionHandler!(false)
         self.room = nil
         self.showRoomUI(inRoom: false)
+        self.callKitCompletionHandler = nil
     }
     
     func room(_ room: TVIRoom, participantDidConnect participant: TVIParticipant) {
@@ -314,6 +315,8 @@ extension ViewController : TVIRoomDelegate {
         if (self.participant == participant) {
             cleanupRemoteParticipant()
         }
+        self.performEndCallAction(uuid: room.uuid!)
+
         logMessage(messageText: "Room \(room.name), Participant \(participant.identity) disconnected")
     }
 }
