@@ -26,7 +26,15 @@ class ViewController: UIViewController {
     /**
      * We will create an audio device and manage it's lifecycle in response to CallKit events.
      */
-    var audioDevice: TVIDefaultAudioDevice = TVIDefaultAudioDevice()
+    var audioDevice: TVIDefaultAudioDevice = TVIDefaultAudioDevice(block: {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, mode: AVAudioSessionModeVoiceChat, options: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setPreferredSampleRate(48000)
+            try AVAudioSession.sharedInstance().setPreferredIOBufferDuration(0.01)
+        } catch {
+            print(error)
+        }
+    })
     var camera: TVICameraCapturer?
     var localVideoTrack: TVILocalVideoTrack?
     var localAudioTrack: TVILocalAudioTrack?
