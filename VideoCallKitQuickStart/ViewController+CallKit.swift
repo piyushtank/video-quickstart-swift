@@ -81,12 +81,9 @@ extension ViewController : CXProviderDelegate {
         self.audioDevice.block()
 
         performRoomConnect(uuid: action.callUUID, roomName: self.roomTextField.text) { (success) in
-            if (success) {
-                action.fulfill(withDateConnected: Date())
-            } else {
-                action.fail()
-            }
         }
+        action.fulfill(withDateConnected: Date())
+
     }
 
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
