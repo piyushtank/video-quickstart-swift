@@ -115,21 +115,6 @@ void prepare(MTAudioProcessingTapRef tap,
              const AudioStreamBasicDescription *processingFormat) {
     NSLog(@"Preparing the Audio Tap Processor");
 
-    // Defer creation of the ring buffer until we understand the processing format.
-    //ExampleAVAudioEngineDevice *device = (__bridge ExampleAVAudioEngineDevice *) MTAudioProcessingTapGetStorage(tap);
-//    //TPCircularBuffer *buffer = NULL;
-//
-//    size_t bufferSize = processingFormat->mBytesPerFrame * maxFrames;
-//    // We need to add some overhead for the AudioBufferList data structures.
-//    bufferSize += 2048;
-//    // TODO: Size the buffer appropriately, as we may need to accumulate more than maxFrames.
-//    bufferSize *= 12;
-
-    // TODO: If we are re-allocating then check the size?
-    //TPCircularBufferInit(buffer, bufferSize);
-    //audioFormat = malloc(sizeof(AudioStreamBasicDescription));
-    //memcpy(audioFormat, processingFormat, sizeof(AudioStreamBasicDescription));
-
     ExampleAVAudioEngineDevice *device = (__bridge ExampleAVAudioEngineDevice *) MTAudioProcessingTapGetStorage(tap);
     device.tapProcessingFormat = *processingFormat;
 
@@ -139,15 +124,6 @@ void prepare(MTAudioProcessingTapRef tap,
 }
 
 void unprepare(MTAudioProcessingTapRef tap) {
-    // Prevent any more frames from being consumed. Note that this might end audio playback early.
-//    ExampleAVAudioEngineDevice *device = (__bridge ExampleAVAudioEngineDevice *) MTAudioProcessingTapGetStorage(tap);
-//    TPCircularBuffer *buffer = NULL;
-
-//    TPCircularBufferClear(buffer);
-//    if (audioFormat) {
-//        free(audioFormat);
-//        audioFormat = NULL;
-//    }
 }
 
 void process(MTAudioProcessingTapRef tap,
