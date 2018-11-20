@@ -25,9 +25,13 @@ class ViewController: UIViewController {
     var camera: TVICameraCapturer?
     var localVideoTrack: TVILocalVideoTrack?
     var localAudioTrack: TVILocalAudioTrack?
+    var localParticipant: TVILocalParticipant?
     var remoteParticipant: TVIRemoteParticipant?
     var remoteView: TVIVideoView?
-    
+    var isUnPublishedVideo: Bool = false
+    var isUnPublishedAudio: Bool = false
+
+
     // MARK: UI Element Outlets and handles
     
     // `TVIVideoView` created from a storyboard
@@ -158,6 +162,9 @@ class ViewController: UIViewController {
             // Room `name`, the Client will create one for you. You can get the name or sid from any connected Room.
             builder.roomName = self.roomTextField.text
         }
+
+        self.isUnPublishedVideo = false
+        self.isUnPublishedAudio = false
         
         // Connect to the Room using the options we provided.
         room = TwilioVideo.connect(with: connectOptions, delegate: self)
@@ -185,6 +192,75 @@ class ViewController: UIViewController {
             }
         }
     }
+
+    @IBAction func showAlert(sender: AnyObject) {
+        let alert = UIAlertController(title: "Title", message: "Please Select an Option", preferredStyle: .actionSheet)
+
+        alert.addAction(UIAlertAction(title: "Publish Video", style: .default , handler:{ (UIAlertAction)in
+            self.publishVideo()
+        }))
+
+        alert.addAction(UIAlertAction(title: "UnPublish Video", style: .default , handler:{ (UIAlertAction)in
+            self.unPublishVideo()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Publish Audio", style: .default , handler:{ (UIAlertAction)in
+            self.publishAudio()
+        }))
+
+        alert.addAction(UIAlertAction(title: "UnPublish Audio", style: .default , handler:{ (UIAlertAction)in
+            self.unPublishAudio()
+        }))
+
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler:{ (UIAlertAction)in
+            print("User click Dismiss button")
+        }))
+
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+    }
+
+    public func publishAudio() {
+        if let localPaticipant = self.localParticipant, isUnPublishedAudio {
+            if let localAudioTrack = self.localAudioTrack {
+                debugPrint("Publish Audio Track")
+                isUnPublishedAudio = false
+                localPaticipant.publishAudioTrack(localAudioTrack)
+            }
+        }
+    }
+
+    public func publishVideo() {
+        if let localPaticipant = self.localParticipant, isUnPublishedVideo {
+            if let localVideoTrack = self.localVideoTrack {
+                debugPrint("Publish Video Track")
+                isUnPublishedVideo = false
+                localPaticipant.publishVideoTrack(localVideoTrack)
+            }
+        }
+    }
+
+    public func unPublishAudio() {
+        if let localPaticipant = self.localParticipant, !isUnPublishedAudio {
+            if let localAudioTrack = self.localAudioTrack {
+                debugPrint("UN_Publish Audio Track")
+                isUnPublishedAudio = true
+                localPaticipant.unpublishAudioTrack(localAudioTrack)
+            }
+        }
+    }
+
+    public func unPublishVideo() {
+        if let localPaticipant = self.localParticipant, !isUnPublishedVideo {
+            if let localVideoTrack = self.localVideoTrack {
+                debugPrint("UN_Publish Video Track")
+                isUnPublishedVideo = true
+                localPaticipant.unpublishVideoTrack(localVideoTrack)
+            }
+        }
+    }
+
 
     // MARK: Private
     func startPreview() {
@@ -296,6 +372,8 @@ extension ViewController : TVIRoomDelegate {
             self.remoteParticipant = room.remoteParticipants[0]
             self.remoteParticipant?.delegate = self
         }
+
+        self.localParticipant = room.localParticipant
     }
     
     func room(_ room: TVIRoom, didDisconnectWithError error: Error?) {
@@ -323,10 +401,12 @@ extension ViewController : TVIRoomDelegate {
     }
     
     func room(_ room: TVIRoom, participantDidDisconnect participant: TVIRemoteParticipant) {
+        self.localParticipant = nil
         if (self.remoteParticipant == participant) {
             cleanupRemoteParticipant()
         }
         logMessage(messageText: "Room \(room.name), Participant \(participant.identity) disconnected")
+
     }
 }
 
