@@ -65,6 +65,8 @@ class ViewController: UIViewController {
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         self.view.addGestureRecognizer(tap)
+
+        TwilioVideo.setLogLevel(.trace, module: .platform)
     }
 
     override var prefersHomeIndicatorAutoHidden: Bool {
@@ -173,15 +175,26 @@ class ViewController: UIViewController {
         logMessage(messageText: "Attempting to disconnect from room \(room!.name)")
     }
     
-    @IBAction func toggleMic(sender: AnyObject) {
-        if (self.localAudioTrack != nil) {
-            self.localAudioTrack?.isEnabled = !(self.localAudioTrack?.isEnabled)!
-            
-            // Update the button title
-            if (self.localAudioTrack?.isEnabled == true) {
-                self.micButton.setTitle("Mute", for: .normal)
-            } else {
-                self.micButton.setTitle("Unmute", for: .normal)
+    @IBAction func simulateCallReject(sender: AnyObject) {
+        // Disable local tracks
+        localAudioTrack?.isEnabled = false
+        localVideoTrack?.isEnabled = false
+
+        // Initialize at the time of joining the room
+        self.camera!.stopCapture()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(10)) {
+            // When User A Decline A Call
+            // Enable local tracks
+            self.localAudioTrack?.isEnabled = true
+            self.localVideoTrack?.isEnabled = true
+
+            if let currentDevice = self.camera!.device {
+                self.camera!.startCapture(with: currentDevice) { (device, format, error) in
+                }
+            } else if let backCamera = TVICameraSource.captureDevice(for: .back){
+                self.camera!.startCapture(with: backCamera) { (device, format, error) in
+                }
             }
         }
     }
